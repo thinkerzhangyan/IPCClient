@@ -1,5 +1,6 @@
 package tk.thinkerzhangyan.ipcclient;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -9,15 +10,16 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import tk.thinkerzhangyan.ipcserver.Book;
 import tk.thinkerzhangyan.ipcserver.IBookManager;
 import tk.thinkerzhangyan.ipcserver.IOnNewBookArrivedListener;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private static final int MESSAGE_NEW_BOOK_ARRIVED = 1;
 
@@ -81,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private Button mButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +97,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         bindService(intent,mServiceConnection, Context.BIND_AUTO_CREATE);
+
+        mButton = (Button) findViewById(R.id.button);
+
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BinderPoolActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 
